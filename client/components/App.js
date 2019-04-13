@@ -3,6 +3,8 @@ import Schools from './Schools';
 import Students from './Students';
 import School from './School';
 import Student from './Student';
+import AddSchool from './AddSchool';
+import AddStudent from './AddStudent';
 import Nav from './Nav';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { fetchStudents, fetchSchools } from '../store';
@@ -34,11 +36,12 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <h1>Dubai Schools</h1>
                     <Nav />
                     <Route path="/schools/:schoolId" component={School} />
+                    <Route path="/schools/add" component={AddSchool} />
                     <Route exact path="/schools" component={Schools} />
                     <Route path="/students/:studentId" component={Student} />
+                    <Route path="/students/add" component={AddStudent} />
                     <Route exact path="/students" component={Students} />
                 </div>
             </Router>

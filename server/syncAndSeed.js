@@ -9,7 +9,7 @@ const syncAndSeed = (force = true) => {
             const students = Promise.all([
                 Student.create({ firstName: 'Harry', lastName: 'Potter', email: 'hpotter@hogwarts.co.uk', imageUrl: 'https://cdn.shopify.com/s/files/1/0193/6253/products/1050252549_600x.png?v=1549679497', gpa: 2.7 }),
                 Student.create({ firstName: 'Draco', lastName: 'Malfoy', email: 'draco@deatheaters.co.uk', imageUrl: 'https://i.pinimg.com/236x/d9/25/2a/d9252a345780864efb4d2809857fc676--harry-potter-toms-harry-potter-things.jpg', gpa: 3.9 }),
-                Student.create({ firstName: 'Hermione', lastName: 'Granger', email: 'hermione@hotmail.co.uk', imageUrl: 'https://pbs.twimg.com/profile_images/527201530102161408/M_Uv2Xjr.jpeg', gpa: 4.0 }),
+                Student.create({ firstName: 'Hermione', lastName: 'Granger', email: 'hermione@hotmail.co.uk', gpa: 4.0 }),
                 Student.create({ firstName: 'Cedric', lastName: 'Diggory', email: 'cdiggory@hogwarts.co.uk', imageUrl: 'http://www.femalefirst.co.uk/image-library/square/500/r/robert-pattinson---wi08-12.jpg', gpa: 2.0 })
             ]);
 
