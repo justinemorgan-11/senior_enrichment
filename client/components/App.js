@@ -1,16 +1,45 @@
 import React from 'react';
+import Schools from './Schools';
+import Students from './Students';
+import Nav from './Nav';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import { fetchStudents, fetchSchools } from '../store';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = (dispatch) => {
+
+    return ({
+        loadStudents: () => dispatch(fetchStudents()),
+        loadSchools: () => dispatch(fetchSchools())
+    })
+}
+
+const mapStateToProps = ({ schools, students }) => {
+    return ({
+        students,
+        schools
+    })
+}
 
 class App extends React.Component {
 
-    render() {
+    componentDidMount() {
+        this.props.loadSchools();
+        this.props.loadStudents();
+    }
 
+    render() {
         return (
-            <div>
-                <h1>hey there!</h1>
-            </div>
+            <Router>
+                <div>
+                    <Nav />
+                    <Route path="/schools" component={Schools} />
+                    <Route path="/students" component={Students} />
+                </div>
+            </Router>
         )
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
