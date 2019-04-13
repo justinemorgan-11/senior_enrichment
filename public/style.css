@@ -1,8 +1,4 @@
 
-body {
-    padding: 2%;
-}
-
 .nav {
     background-color: lightgray;
     width: 100%;
@@ -13,24 +9,27 @@ body {
     color: green;
 }
 
-table {
-    width: 100%;
+.school-list {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-tr {
-    width: 100%;
-    border: 1px solid grey; 
+.school-div {
+    background-color: aquamarine;
+    width: 50%;
+    border: 1px solid grey;
+    justify-content: center;
+    text-align: center;
 }
 
-td {
-    padding: 10px;
+.school-logo {
+    border: 1px solid grey;
+    height: 200px;
+    width: 200px;
 }
 
-select {
-    width: 150px;
-}
-
-.btn {
-    width: 100px;
-    margin-top: 10px;
+.student-picture {
+    height: 200px;
+    width: 200px;
+    border: 1px solid grey;
 }

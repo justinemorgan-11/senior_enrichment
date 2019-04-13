@@ -7,10 +7,10 @@ const syncAndSeed = (force = true) => {
         .then(() => {
 
             const students = Promise.all([
-                Student.create({ firstName: 'Harry', lastName: 'Potter', email: 'hpotter@hogwarts.co.uk', imageUrl: 'harry.png', gpa: 2.7 }),
-                Student.create({ firstName: 'Draco', lastName: 'Malfoy', email: 'draco@deatheaters.co.uk', imageUrl: 'draco.png', gpa: 3.9 }),
-                Student.create({ firstName: 'Hermione', lastName: 'Granger', email: 'hermione@hotmail.co.uk', imageUrl: 'hermione.png', gpa: 4.0 }),
-                Student.create({ firstName: 'Cedric', lastName: 'Diggory', email: 'cdiggory@hogwarts.co.uk', imageUrl: 'cedric.png', gpa: 2.0 })
+                Student.create({ firstName: 'Harry', lastName: 'Potter', email: 'hpotter@hogwarts.co.uk', imageUrl: 'https://cdn.shopify.com/s/files/1/0193/6253/products/1050252549_600x.png?v=1549679497', gpa: 2.7 }),
+                Student.create({ firstName: 'Draco', lastName: 'Malfoy', email: 'draco@deatheaters.co.uk', imageUrl: 'https://i.pinimg.com/236x/d9/25/2a/d9252a345780864efb4d2809857fc676--harry-potter-toms-harry-potter-things.jpg', gpa: 3.9 }),
+                Student.create({ firstName: 'Hermione', lastName: 'Granger', email: 'hermione@hotmail.co.uk', imageUrl: 'https://pbs.twimg.com/profile_images/527201530102161408/M_Uv2Xjr.jpeg', gpa: 4.0 }),
+                Student.create({ firstName: 'Cedric', lastName: 'Diggory', email: 'cdiggory@hogwarts.co.uk', imageUrl: 'http://www.femalefirst.co.uk/image-library/square/500/r/robert-pattinson---wi08-12.jpg', gpa: 2.0 })
             ]);
 
             const schools = Promise.all([
@@ -26,9 +26,6 @@ const syncAndSeed = (force = true) => {
 
             const [harry, draco, hermione, cedric] = students;
             const [gryffindor, slytherin, ravenclaw, hufflepuff] = schools;
-
-            harry.setSchool(gryffindor);
-            gryffindor.addStudent(harry);
 
             draco.setSchool(slytherin);
             slytherin.addStudent(draco);

@@ -114,6 +114,14 @@ var _Students = __webpack_require__(/*! ./Students */ "./client/components/Stude
 
 var _Students2 = _interopRequireDefault(_Students);
 
+var _School = __webpack_require__(/*! ./School */ "./client/components/School.js");
+
+var _School2 = _interopRequireDefault(_School);
+
+var _Student = __webpack_require__(/*! ./Student */ "./client/components/Student.js");
+
+var _Student2 = _interopRequireDefault(_Student);
+
 var _Nav = __webpack_require__(/*! ./Nav */ "./client/components/Nav.js");
 
 var _Nav2 = _interopRequireDefault(_Nav);
@@ -178,9 +186,16 @@ var App = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     null,
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        'Dubai Schools'
+                    ),
                     _react2.default.createElement(_Nav2.default, null),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/schools', component: _Schools2.default }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/students', component: _Students2.default })
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/schools/:schoolId', component: _School2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/schools', component: _Schools2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/students/:studentId', component: _Student2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/students', component: _Students2.default })
                 )
             );
         }
@@ -244,6 +259,108 @@ exports.default = Nav;
 
 /***/ }),
 
+/***/ "./client/components/School.js":
+/*!*************************************!*\
+  !*** ./client/components/School.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(_ref, props) {
+    var schools = _ref.schools,
+        students = _ref.students;
+
+
+    var school = schools.filter(function (s) {
+        return s.id === Number(props.match.params.schoolId);
+    })[0];
+    students = students.filter(function (student) {
+        return student.schoolId === Number(props.match.params.schoolId);
+    });
+
+    return { school: school, students: students };
+};
+
+var School = function School(_ref2) {
+    var school = _ref2.school,
+        students = _ref2.students;
+
+
+    if (!school) {
+        return _react2.default.createElement('div', null);
+    } else {
+        return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+                'h1',
+                null,
+                school.name
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                school.address
+            ),
+            _react2.default.createElement('img', { src: school.imageUrl }),
+            _react2.default.createElement(
+                'p',
+                null,
+                school.description
+            ),
+            _react2.default.createElement(
+                'h3',
+                null,
+                'Students:'
+            ),
+            students.length > 0 ? _react2.default.createElement(
+                'ul',
+                null,
+                students.map(function (student) {
+                    return _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/students/' + student.id, key: student.id },
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            student.firstName + ' ' + student.lastName
+                        )
+                    );
+                })
+            ) : _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'i',
+                    null,
+                    'No students enrolled'
+                )
+            )
+        );
+    }
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(School);
+
+/***/ }),
+
 /***/ "./client/components/Schools.js":
 /*!**************************************!*\
   !*** ./client/components/Schools.js ***!
@@ -264,6 +381,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
@@ -278,16 +397,20 @@ var Schools = function Schools(_ref2) {
 
     return _react2.default.createElement(
         'div',
-        null,
+        { className: 'school-list' },
         schools.map(function (school) {
             return _react2.default.createElement(
                 'div',
-                { key: school.id },
-                _react2.default.createElement('img', { src: school.imageUrl }),
+                { key: school.id, className: 'school-div' },
+                _react2.default.createElement('img', { src: school.imageUrl, className: 'school-logo' }),
                 _react2.default.createElement(
-                    'h2',
-                    null,
-                    school.name
+                    _reactRouterDom.Link,
+                    { to: '/schools/' + school.id },
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        school.name
+                    )
                 )
             );
         })
@@ -295,6 +418,107 @@ var Schools = function Schools(_ref2) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Schools);
+
+/***/ }),
+
+/***/ "./client/components/Student.js":
+/*!**************************************!*\
+  !*** ./client/components/Student.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(_ref, props) {
+    var students = _ref.students,
+        schools = _ref.schools;
+
+    var student = students.filter(function (st) {
+        return st.id === Number(props.match.params.studentId);
+    })[0];
+    var school = student ? schools.filter(function (s) {
+        return s.id === student.schoolId;
+    })[0] : null;
+    return { student: student, school: school };
+};
+
+var Student = function Student(_ref2) {
+    var school = _ref2.school,
+        student = _ref2.student;
+
+    if (!student) {
+        return _react2.default.createElement('div', null);
+    } else {
+        return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+                'h2',
+                null,
+                student.firstName,
+                ' ',
+                student.lastName
+            ),
+            _react2.default.createElement('img', { src: student.imageUrl, className: 'student-picture' }),
+            _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'b',
+                    null,
+                    'Email: '
+                ),
+                student.email
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'b',
+                    null,
+                    'School: '
+                ),
+                school ? _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/schools/' + school.id },
+                    school.name
+                ) : _react2.default.createElement(
+                    'i',
+                    null,
+                    'This student is not currently enrolled in school'
+                )
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'b',
+                    null,
+                    'GPA: '
+                ),
+                student.gpa
+            )
+        );
+    }
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Student);
 
 /***/ }),
 
@@ -318,6 +542,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
@@ -337,11 +563,15 @@ var Students = function Students(_ref2) {
                 'div',
                 { key: student.id },
                 _react2.default.createElement(
-                    'h2',
-                    null,
-                    student.firstName,
-                    ' ',
-                    student.lastName
+                    _reactRouterDom.Link,
+                    { to: '/students/' + student.id },
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        student.firstName,
+                        ' ',
+                        student.lastName
+                    )
                 )
             );
         })

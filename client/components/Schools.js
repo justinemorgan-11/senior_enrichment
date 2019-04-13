@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const mapStateToProps = ({ schools, students }) => {
     return { students, schools }
@@ -8,12 +9,12 @@ const mapStateToProps = ({ schools, students }) => {
 
 const Schools = ({ schools }) => {
     return (
-        <div>
+        <div className="school-list">
             {schools.map(school => {
                 return (
-                    <div key={school.id}>
-                        <img src={school.imageUrl} />
-                        <h2>{school.name}</h2>
+                    <div key={school.id} className="school-div">
+                        <img src={school.imageUrl} className="school-logo" />
+                        <Link to={`/schools/${school.id}`}><h2>{school.name}</h2></Link>
                     </div>
                 )
             })}
