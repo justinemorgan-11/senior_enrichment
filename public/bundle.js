@@ -176,7 +176,7 @@ var AddSchool = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'add-form' },
                 _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
@@ -185,29 +185,29 @@ var AddSchool = function (_React$Component) {
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'name' },
+                            { className: 'input-label', htmlFor: 'name' },
                             'Name:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.name, onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'name', type: 'text', value: this.state.name, onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'address' },
+                            { className: 'input-label', htmlFor: 'address' },
                             'Address:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'address', type: 'text', value: this.state.address, onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'address', type: 'text', value: this.state.address, onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'imageUrl' },
+                            { className: 'input-label', htmlFor: 'imageUrl' },
                             'Image URL ',
                             _react2.default.createElement(
                                 'i',
@@ -216,14 +216,14 @@ var AddSchool = function (_React$Component) {
                             )
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.imageUrl, onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'imageUrl', type: 'text', value: this.state.imageUrl, onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'description' },
+                            { className: 'input-label', htmlFor: 'description' },
                             'Description ',
                             _react2.default.createElement(
                                 'i',
@@ -232,11 +232,11 @@ var AddSchool = function (_React$Component) {
                             )
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'description', type: 'text', value: this.state.description, onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'description', type: 'text', value: this.state.description, onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'button',
-                        { type: 'submit', className: 'btn btn-success' },
+                        { type: 'submit', className: 'btn btn-secondary input-btn' },
                         'Add School'
                     )
                 )
@@ -317,13 +317,9 @@ var AddStudent = function (_React$Component) {
     _createClass(AddStudent, [{
         key: 'handleChange',
         value: function handleChange(_ref) {
-            var _this2 = this;
-
             var target = _ref.target;
 
-            this.setState(_defineProperty({}, target.name, target.value), function () {
-                return console.log(_this2.state);
-            });
+            this.setState(_defineProperty({}, target.name, target.value));
         }
     }, {
         key: 'handleSubmit',
@@ -343,7 +339,7 @@ var AddStudent = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'add-form' },
                 _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
@@ -352,40 +348,40 @@ var AddStudent = function (_React$Component) {
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'firstName' },
+                            { className: 'input-label', htmlFor: 'firstName' },
                             'First Name:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'firstName', value: this.state.firstName, type: 'text', onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'firstName', value: this.state.firstName, type: 'text', onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'lastName' },
+                            { className: 'input-label', htmlFor: 'lastName' },
                             'Last Name:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'lastName', value: this.state.lastName, type: 'text', onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'lastName', value: this.state.lastName, type: 'text', onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'email' },
+                            { className: 'input-label', htmlFor: 'email' },
                             'Email:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'email', value: this.state.email, type: 'text', onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'email', value: this.state.email, type: 'text', onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'imageUrl' },
+                            { className: 'input-label', htmlFor: 'imageUrl' },
                             'Profile Picture ',
                             _react2.default.createElement(
                                 'i',
@@ -395,14 +391,14 @@ var AddStudent = function (_React$Component) {
                             ':'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'imageUrl', value: this.state.imageUrl, type: 'text', onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'imageUrl', value: this.state.imageUrl, type: 'text', onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement(
                             'label',
-                            { htmlFor: 'gpa' },
+                            { className: 'input-label', htmlFor: 'gpa' },
                             'GPA ',
                             _react2.default.createElement(
                                 'i',
@@ -412,11 +408,11 @@ var AddStudent = function (_React$Component) {
                             ':'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { name: 'gpa', value: this.state.gpa, type: 'number', onChange: this.handleChange })
+                        _react2.default.createElement('input', { className: 'input-box', name: 'gpa', value: this.state.gpa, type: 'number', onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
                         'button',
-                        { type: 'submit', className: 'btn btn-success' },
+                        { type: 'submit', className: 'btn btn-secondary input-btn' },
                         'Add Student'
                     )
                 )
@@ -494,7 +490,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-
     return {
         loadStudents: function loadStudents() {
             return dispatch((0, _store.fetchStudents)());
@@ -544,7 +539,7 @@ var App = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     'div',
-                    null,
+                    { className: 'background' },
                     _react2.default.createElement(_Nav2.default, null),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/schools/:schoolId', component: _School2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/schools/add', component: _AddSchool2.default }),
@@ -687,7 +682,7 @@ var School = function School(_ref2) {
     } else {
         return _react2.default.createElement(
             'div',
-            null,
+            { className: 'profile' },
             _react2.default.createElement(
                 'h1',
                 null,
@@ -790,22 +785,28 @@ var Schools = function Schools(props) {
             return _react2.default.createElement(
                 'div',
                 { key: school.id, className: 'school-div' },
-                _react2.default.createElement('img', { src: school.imageUrl, className: 'school-logo' }),
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/schools/' + school.id },
+                    'div',
+                    { className: 'btn-container' },
                     _react2.default.createElement(
-                        'h2',
-                        null,
-                        school.name
+                        'button',
+                        { type: 'submit', className: 'btn remove-school', onClick: function onClick() {
+                                return props.delete(school.id);
+                            } },
+                        'X'
                     )
                 ),
                 _react2.default.createElement(
-                    'button',
-                    { type: 'submit', className: 'btn remove-school', onClick: function onClick() {
-                            return props.delete(school.id);
-                        } },
-                    'X'
+                    'h6',
+                    null,
+                    school.name
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/schools/' + school.id },
+                    _react2.default.createElement('img', { src: school.imageUrl, className: 'school-logo' }),
+                    _react2.default.createElement('br', null)
                 )
             );
         })
@@ -862,7 +863,7 @@ var Student = function Student(_ref2) {
     } else {
         return _react2.default.createElement(
             'div',
-            null,
+            { className: 'profile' },
             _react2.default.createElement(
                 'h2',
                 null,
@@ -931,6 +932,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -941,11 +944,13 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _store = __webpack_require__(/*! ../store */ "./client/store.js");
 
-var _Schools = __webpack_require__(/*! ./Schools */ "./client/components/Schools.js");
-
-var _Schools2 = _interopRequireDefault(_Schools);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
     var students = _ref.students,
@@ -962,80 +967,119 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 
-var Students = function Students(props) {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-            'table',
-            { className: 'student-list' },
-            _react2.default.createElement(
-                'tbody',
+var Students = function (_React$Component) {
+    _inherits(Students, _React$Component);
+
+    function Students() {
+        _classCallCheck(this, Students);
+
+        return _possibleConstructorReturn(this, (Students.__proto__ || Object.getPrototypeOf(Students)).apply(this, arguments));
+    }
+
+    _createClass(Students, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            console.log(prevProps.students);
+            console.log(this.props.match.params);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
                 null,
-                props.students.map(function (student) {
-                    return _react2.default.createElement(
+                _react2.default.createElement(
+                    'table',
+                    { className: 'student-list' },
+                    _react2.default.createElement(
                         'tr',
-                        { key: student.id },
+                        null,
+                        _react2.default.createElement('th', null),
                         _react2.default.createElement(
-                            'td',
-                            { className: 'img-td' },
-                            _react2.default.createElement('img', { className: 'img-td', src: student.imageUrl })
+                            'th',
+                            null,
+                            'Student'
                         ),
                         _react2.default.createElement(
-                            'td',
-                            { className: 'student-td' },
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/students/' + student.id },
+                            'th',
+                            null,
+                            'School'
+                        ),
+                        _react2.default.createElement('th', null)
+                    ),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        this.props.students.map(function (student) {
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: student.id },
                                 _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    student.firstName,
-                                    ' ',
-                                    student.lastName
-                                )
-                            )
-                        ),
-                        student.schoolId ? _react2.default.createElement(
-                            'td',
-                            { className: 'student-td' },
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/schools/' + student.schoolId },
+                                    'td',
+                                    { className: 'img-td' },
+                                    _react2.default.createElement('img', { className: 'img-td', src: student.imageUrl })
+                                ),
                                 _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    props.schools.filter(function (s) {
-                                        return s.id === student.schoolId;
-                                    })[0].name
+                                    'td',
+                                    { className: 'student-td' },
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/students/' + student.id },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            student.firstName,
+                                            ' ',
+                                            student.lastName
+                                        )
+                                    )
+                                ),
+                                student.schoolId ? _react2.default.createElement(
+                                    'td',
+                                    { className: 'student-td' },
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/schools/' + student.schoolId },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            _this2.props.schools.filter(function (s) {
+                                                return s.id === student.schoolId;
+                                            })[0].name
+                                        )
+                                    )
+                                ) : _react2.default.createElement(
+                                    'td',
+                                    { className: 'student-td' },
+                                    _react2.default.createElement(
+                                        'i',
+                                        null,
+                                        'Not enrolled '
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'student-td' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'btn btn-danger', type: 'submit', onClick: function onClick() {
+                                                return _this2.props.delete(student.id);
+                                            } },
+                                        'X'
+                                    )
                                 )
-                            )
-                        ) : _react2.default.createElement(
-                            'td',
-                            { className: 'student-td' },
-                            _react2.default.createElement(
-                                'i',
-                                null,
-                                'Not enrolled '
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'td',
-                            { className: 'student-td' },
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-danger', type: 'submit', onClick: function onClick() {
-                                        return props.delete(student.id);
-                                    } },
-                                'X'
-                            )
-                        )
-                    );
-                })
-            )
-        )
-    );
-};
+                            );
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Students;
+}(_react2.default.Component);
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Students);
 
@@ -1238,12 +1282,14 @@ var deleteSchool = function deleteSchool(id) {
 // delete a student
 var deleteStudent = function deleteStudent(id) {
     return function (dispatch) {
-        _axios2.default.delete('/students/' + id);
-        _axios2.default.get('/students').then(function (res) {
-            return res.data;
-        }).then(function (students) {
-            return dispatch(getStudents(students));
+        _axios2.default.delete('/students/' + id).then(function () {
+            return dispatch(removeStudent(id));
+        }).catch(function (err) {
+            return console.log(err);
         });
+        // axios.get('/students')
+        //     .then(res => res.data)
+        //     .then(students => dispatch(getStudents(students)));
     };
 };
 

@@ -11,7 +11,6 @@ import { fetchStudents, fetchSchools } from '../store';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-
     return ({
         loadStudents: () => dispatch(fetchStudents()),
         loadSchools: () => dispatch(fetchSchools())
@@ -40,7 +39,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <div>
+                <div className="background">
                     <Nav />
                     <Route path="/schools/:schoolId" component={School} />
                     <Route path="/schools/add" component={AddSchool} />
@@ -49,7 +48,7 @@ class App extends React.Component {
                     <Route path="/students/add" component={AddStudent} />
                     <Route exact path="/students" component={Students} />
                 </div>
-            </Router>
+            </Router >
         )
     }
 }

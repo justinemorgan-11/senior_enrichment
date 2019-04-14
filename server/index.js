@@ -80,23 +80,3 @@ const PORT = process.env.PORT || 3000;
 syncAndSeed(true);
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
-
-// do i need these? don't think so... 
-
-// app.get('/students/:studentId', (req, res, next) => {
-//     Student.findOne({
-//         where: {
-//             id: req.params.studentId
-//         }
-//     })
-//         .then(student => res.send(student));
-// })
-
-// app.get('/schools/:schoolId', (req, res, next) => {
-//     School.findOne({
-//         where: {
-//             id: req.params.schoolId
-//         }
-//     })
-//         .then(school => res.send(school));
-// })

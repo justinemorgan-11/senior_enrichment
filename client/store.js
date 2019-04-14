@@ -99,10 +99,12 @@ const deleteSchool = (id) => {
 // delete a student
 const deleteStudent = (id) => {
     return (dispatch) => {
-        axios.delete(`/students/${id}`);
-        axios.get('/students')
-            .then(res => res.data)
-            .then(students => dispatch(getStudents(students)));
+        axios.delete(`/students/${id}`)
+            .then(() => dispatch(removeStudent(id)))
+            .catch(err => console.log(err));
+        // axios.get('/students')
+        //     .then(res => res.data)
+        //     .then(students => dispatch(getStudents(students)));
     }
 }
 

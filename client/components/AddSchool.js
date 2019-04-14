@@ -38,25 +38,25 @@ class AddSchool extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="add-form">
                 <form onSubmit={this.handleSubmit}>
                     <div>
-                        <label htmlFor="name">Name:</label><br />
-                        <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
+                        <label className="input-label" htmlFor="name">Name:</label><br />
+                        <input className="input-box" name="name" type="text" value={this.state.name} onChange={this.handleChange} />
                     </div>
                     <div>
-                        <label htmlFor="address">Address:</label><br />
-                        <input name="address" type="text" value={this.state.address} onChange={this.handleChange} />
+                        <label className="input-label" htmlFor="address">Address:</label><br />
+                        <input className="input-box" name="address" type="text" value={this.state.address} onChange={this.handleChange} />
                     </div>
                     <div>
-                        <label htmlFor="imageUrl">Image URL <i>(Optional)</i></label><br />
-                        <input name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleChange} />
+                        <label className="input-label" htmlFor="imageUrl">Image URL <i>(Optional)</i></label><br />
+                        <input className="input-box" name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleChange} />
                     </div>
                     <div>
-                        <label htmlFor="description">Description <i>(Optional)</i></label><br />
-                        <input name="description" type="text" value={this.state.description} onChange={this.handleChange} />
+                        <label className="input-label" htmlFor="description">Description <i>(Optional)</i></label><br />
+                        <input className="input-box" name="description" type="text" value={this.state.description} onChange={this.handleChange} />
                     </div>
-                    <button type="submit" className="btn btn-success">Add School</button>
+                    <button type="submit" className="btn btn-secondary input-btn">Add School</button>
                 </form>
             </div>
         )

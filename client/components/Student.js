@@ -14,7 +14,7 @@ const Student = ({ school, student }) => {
         return <div />
     } else {
         return (
-            <div>
+            <div className="profile">
                 <h2>{student.firstName} {student.lastName}</h2>
                 <img src={student.imageUrl} className="student-picture" />
                 <p><b>Email: </b>{student.email}</p>

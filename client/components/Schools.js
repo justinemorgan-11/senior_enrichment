@@ -21,9 +21,11 @@ const Schools = (props) => {
             {props.schools.map(school => {
                 return (
                     <div key={school.id} className="school-div">
-                        <img src={school.imageUrl} className="school-logo" />
-                        <Link to={`/schools/${school.id}`}><h2>{school.name}</h2></Link>
-                        <button type="submit" className="btn remove-school" onClick={() => props.delete(school.id)}>X</button>
+                        <div className="btn-container">
+                            <button type="submit" className="btn remove-school" onClick={() => props.delete(school.id)}>X</button>
+                        </div>
+                        <h6>{school.name}</h6><br />
+                        <Link to={`/schools/${school.id}`}><img src={school.imageUrl} className="school-logo" /><br /></Link>
                     </div>
                 )
             })}

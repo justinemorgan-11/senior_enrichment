@@ -17,7 +17,7 @@ const School = ({ school, students }) => {
         return <div />
     } else {
         return (
-            <div>
+            <div className="profile">
                 <h1>{school.name}</h1>
                 <p>{school.address}</p>
                 <img src={school.imageUrl} />
