@@ -1,4 +1,5 @@
 
+
 const express = require('express');
 const path = require('path');
 const { syncAndSeed } = require('./syncAndSeed');
@@ -51,6 +52,26 @@ app.post('/schools', (req, res, next) => {
         description: req.body.description
     })
         .then(school => res.send(school))
+        .catch(next);
+})
+
+// remove a school
+app.delete('/schools/:schoolId', (req, res, next) => {
+    School.destroy({
+        where: {
+            id: req.params.schoolId
+        }
+    })
+        .catch(next)
+})
+
+// remove a student
+app.delete('/students/:studentId', (req, res, next) => {
+    Student.destroy({
+        where: {
+            id: req.params.studentId
+        }
+    })
         .catch(next);
 })
 

@@ -531,6 +531,12 @@ var App = function (_React$Component) {
             this.props.loadStudents();
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            console.log(prevProps);
+            console.log(this.props);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -585,9 +591,9 @@ var Nav = function Nav() {
         'div',
         { className: 'nav' },
         _react2.default.createElement(
-            'h1',
-            null,
-            'Dubai Schools'
+            _reactRouterDom.Link,
+            { to: '/' },
+            _react2.default.createElement('img', { src: 'dubai.png', className: 'nav-item nav-image' })
         ),
         _react2.default.createElement(
             _reactRouterDom.Link,
@@ -756,6 +762,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _store = __webpack_require__(/*! ../store */ "./client/store.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
@@ -765,13 +773,20 @@ var mapStateToProps = function mapStateToProps(_ref) {
     return { students: students, schools: schools };
 };
 
-var Schools = function Schools(_ref2) {
-    var schools = _ref2.schools;
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        delete: function _delete(id) {
+            return dispatch((0, _store.deleteSchool)(id));
+        }
+    };
+};
+
+var Schools = function Schools(props) {
 
     return _react2.default.createElement(
         'div',
         { className: 'school-list' },
-        schools.map(function (school) {
+        props.schools.map(function (school) {
             return _react2.default.createElement(
                 'div',
                 { key: school.id, className: 'school-div' },
@@ -784,13 +799,20 @@ var Schools = function Schools(_ref2) {
                         null,
                         school.name
                     )
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { type: 'submit', className: 'btn remove-school', onClick: function onClick() {
+                            return props.delete(school.id);
+                        } },
+                    'X'
                 )
             );
         })
     );
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Schools);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Schools);
 
 /***/ }),
 
@@ -917,41 +939,105 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _store = __webpack_require__(/*! ../store */ "./client/store.js");
+
+var _Schools = __webpack_require__(/*! ./Schools */ "./client/components/Schools.js");
+
+var _Schools2 = _interopRequireDefault(_Schools);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-    var students = _ref.students;
+    var students = _ref.students,
+        schools = _ref.schools;
 
-    return { students: students };
+    return { students: students, schools: schools };
 };
 
-var Students = function Students(_ref2) {
-    var students = _ref2.students;
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        delete: function _delete(id) {
+            return dispatch((0, _store.deleteStudent)(id));
+        }
+    };
+};
 
+var Students = function Students(props) {
     return _react2.default.createElement(
         'div',
         null,
-        students.map(function (student) {
-            return _react2.default.createElement(
-                'div',
-                { key: student.id },
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/students/' + student.id },
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        student.firstName,
-                        ' ',
-                        student.lastName
-                    )
-                )
-            );
-        })
+        _react2.default.createElement(
+            'table',
+            { className: 'student-list' },
+            _react2.default.createElement(
+                'tbody',
+                null,
+                props.students.map(function (student) {
+                    return _react2.default.createElement(
+                        'tr',
+                        { key: student.id },
+                        _react2.default.createElement(
+                            'td',
+                            { className: 'img-td' },
+                            _react2.default.createElement('img', { className: 'img-td', src: student.imageUrl })
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            { className: 'student-td' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/students/' + student.id },
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    student.firstName,
+                                    ' ',
+                                    student.lastName
+                                )
+                            )
+                        ),
+                        student.schoolId ? _react2.default.createElement(
+                            'td',
+                            { className: 'student-td' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/schools/' + student.schoolId },
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    props.schools.filter(function (s) {
+                                        return s.id === student.schoolId;
+                                    })[0].name
+                                )
+                            )
+                        ) : _react2.default.createElement(
+                            'td',
+                            { className: 'student-td' },
+                            _react2.default.createElement(
+                                'i',
+                                null,
+                                'Not enrolled '
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            { className: 'student-td' },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-danger', type: 'submit', onClick: function onClick() {
+                                        return props.delete(student.id);
+                                    } },
+                                'X'
+                            )
+                        )
+                    );
+                })
+            )
+        )
     );
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Students);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Students);
 
 /***/ }),
 
@@ -1006,7 +1092,7 @@ _reactDom2.default.render(_react2.default.createElement(
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.addStudent = exports.addSchool = exports.fetchStudents = exports.fetchSchools = undefined;
+exports.deleteStudent = exports.deleteSchool = exports.addStudent = exports.addSchool = exports.fetchStudents = exports.fetchSchools = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1033,6 +1119,8 @@ var initialState = {
 var GET_SCHOOLS = 'GET_SCHOOLS';
 var NEW_SCHOOL = 'NEW_SCHOOL';
 var NEW_STUDENT = 'NEW_STUDENT';
+var REMOVE_SCHOOL = 'REMOVE_SCHOOL';
+var REMOVE_STUDENT = 'REMOVE_STUDENT';
 
 // action creators
 var getStudents = function getStudents(students) {
@@ -1047,33 +1135,14 @@ var newSchool = function newSchool(school) {
 var newStudent = function newStudent(student) {
     return { type: NEW_STUDENT, student: student };
 };
+var removeSchool = function removeSchool(id) {
+    return { type: REMOVE_SCHOOL, id: id };
+};
+var removeStudent = function removeStudent(student) {
+    return { type: REMOVE_STUDENT, student: student };
+};
 
-// reducers
-// const studentReducer = (state = [], action) => {
-
-//     switch (action.type) {
-//         case GET_STUDENTS:
-//             return action.students
-//         default:
-//             return state;
-//     }
-// }
-
-// const schoolReducer = (state = [], action) => {
-
-//     switch (action.type) {
-//         case GET_SCHOOLS:
-//             return action.schools
-//         default:
-//             return state;
-//     }
-// }
-
-// const reducer = combineReducers({
-//     studentReducer,
-//     schoolReducer
-// })
-
+// reducer (TODO: come back and split into 2 reducers... is this necessary?)
 var reducer = function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
@@ -1087,6 +1156,14 @@ var reducer = function reducer() {
             return _extends({}, state, { schools: [].concat(_toConsumableArray(state.schools), [action.school]) });
         case NEW_STUDENT:
             return _extends({}, state, { students: [].concat(_toConsumableArray(state.students), [action.student]) });
+        case REMOVE_SCHOOL:
+            return _extends({}, state, { schools: [].concat(_toConsumableArray(state.schools)).filter(function (s) {
+                    return s.id !== action.id;
+                }) });
+        case REMOVE_STUDENT:
+            return _extends({}, state, { students: [].concat(_toConsumableArray(state.students)).filter(function (st) {
+                    return st.id !== action.student.id;
+                }) });
         default:
             return state;
     }
@@ -1146,12 +1223,38 @@ var addStudent = function addStudent(studentToAdd) {
     };
 };
 
+// delete a school 
+var deleteSchool = function deleteSchool(id) {
+    return function (dispatch) {
+        _axios2.default.delete('/schools/' + id);
+        _axios2.default.get('/schools').then(function (res) {
+            return res.data;
+        }).then(function (schools) {
+            return dispatch(getSchools(schools));
+        });
+    };
+};
+
+// delete a student
+var deleteStudent = function deleteStudent(id) {
+    return function (dispatch) {
+        _axios2.default.delete('/students/' + id);
+        _axios2.default.get('/students').then(function (res) {
+            return res.data;
+        }).then(function (students) {
+            return dispatch(getStudents(students));
+        });
+    };
+};
+
 var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 exports.default = store;
 exports.fetchSchools = fetchSchools;
 exports.fetchStudents = fetchStudents;
 exports.addSchool = addSchool;
 exports.addStudent = addStudent;
+exports.deleteSchool = deleteSchool;
+exports.deleteStudent = deleteStudent;
 
 /***/ }),
 

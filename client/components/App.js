@@ -32,6 +32,11 @@ class App extends React.Component {
         this.props.loadStudents();
     }
 
+    componentDidUpdate(prevProps) {
+        console.log(prevProps)
+        console.log(this.props)
+    }
+
     render() {
         return (
             <Router>

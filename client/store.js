@@ -13,39 +13,18 @@ const GET_STUDENTS = 'GET_STUDENTS';
 const GET_SCHOOLS = 'GET_SCHOOLS';
 const NEW_SCHOOL = 'NEW_SCHOOL';
 const NEW_STUDENT = 'NEW_STUDENT';
+const REMOVE_SCHOOL = 'REMOVE_SCHOOL';
+const REMOVE_STUDENT = 'REMOVE_STUDENT';
 
 // action creators
 const getStudents = (students) => ({ type: GET_STUDENTS, students })
 const getSchools = (schools) => ({ type: GET_SCHOOLS, schools })
 const newSchool = (school) => ({ type: NEW_SCHOOL, school })
 const newStudent = (student) => ({ type: NEW_STUDENT, student })
+const removeSchool = (id) => ({ type: REMOVE_SCHOOL, id })
+const removeStudent = (student) => ({ type: REMOVE_STUDENT, student })
 
-// reducers
-// const studentReducer = (state = [], action) => {
-
-//     switch (action.type) {
-//         case GET_STUDENTS:
-//             return action.students
-//         default:
-//             return state;
-//     }
-// }
-
-// const schoolReducer = (state = [], action) => {
-
-//     switch (action.type) {
-//         case GET_SCHOOLS:
-//             return action.schools
-//         default:
-//             return state;
-//     }
-// }
-
-// const reducer = combineReducers({
-//     studentReducer,
-//     schoolReducer
-// })
-
+// reducer (TODO: come back and split into 2 reducers... is this necessary?)
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SCHOOLS:
@@ -56,6 +35,10 @@ const reducer = (state = initialState, action) => {
             return { ...state, schools: [...state.schools, action.school] }
         case NEW_STUDENT:
             return { ...state, students: [...state.students, action.student] }
+        case REMOVE_SCHOOL:
+            return { ...state, schools: [...state.schools].filter(s => s.id !== action.id) }
+        case REMOVE_STUDENT:
+            return { ...state, students: [...state.students].filter(st => st.id !== action.student.id) }
         default:
             return state;
     }
@@ -103,7 +86,27 @@ const addStudent = (studentToAdd) => {
     }
 }
 
+// delete a school 
+const deleteSchool = (id) => {
+    return (dispatch) => {
+        axios.delete(`/schools/${id}`);
+        axios.get('/schools')
+            .then(res => res.data)
+            .then(schools => dispatch(getSchools(schools)));
+    }
+}
+
+// delete a student
+const deleteStudent = (id) => {
+    return (dispatch) => {
+        axios.delete(`/students/${id}`);
+        axios.get('/students')
+            .then(res => res.data)
+            .then(students => dispatch(getStudents(students)));
+    }
+}
+
 const store = createStore(reducer, applyMiddleware(thunk));
 export default store;
-export { fetchSchools, fetchStudents, addSchool, addStudent }
+export { fetchSchools, fetchStudents, addSchool, addStudent, deleteSchool, deleteStudent }
 
