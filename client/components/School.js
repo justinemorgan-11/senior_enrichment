@@ -14,29 +14,40 @@ const mapStateToProps = ({ schools, students }, props) => {
 const School = ({ school, students }) => {
 
     if (!school) {
-        return <div />
+        return (
+            <div>
+                <h1 className="not-found">School not found</h1>
+            </div>
+        )
     } else {
         return (
             <div className="profile">
-                <h1>{school.name}</h1>
-                <p>{school.address}</p>
-                <img src={school.imageUrl} />
-                <p>{school.description}</p>
-                <h3>Students:</h3>
-                {students.length > 0 ?
-                    <ul>
-                        {students.map(student => {
-                            return (
-                                <Link to={`/students/${student.id}`} key={student.id}>
-                                    <li >
-                                        {`${student.firstName} ${student.lastName}`}
-                                    </li>
-                                </Link>)
-                        })}
-                    </ul> :
-                    <p><i>No students enrolled</i></p>
-                }
-            </div>
+                <div className="profile-img-container">
+                    <Link to="/schools"><img className="profile-img" src={school.imageUrl} /></Link>
+                </div>
+                <div className="profile-details">
+                    <h2>{school.name}</h2>
+                    <p><b>Address: </b>{school.address}</p>
+                    <p><b>About: </b>{school.description}</p>
+                    <h4>Students:</h4>
+                    {students.length > 0 ?
+                        <ul>
+                            {students.map(student => {
+                                return (
+                                    <Link to={`/students/${student.id}`} key={student.id}>
+                                        <li >
+                                            {`${student.firstName} ${student.lastName}`}
+                                        </li>
+                                    </Link>)
+                            })}
+                        </ul> :
+                        <p><i>No students enrolled</i></p>
+                    }
+                    <div className="btn-container">
+                        <Link to={`/schools/edit/${school.id}`}><button type="submit" className="btn edit-school">Edit</button></Link>
+                    </div>
+                </div>
+            </div >
         )
     }
 

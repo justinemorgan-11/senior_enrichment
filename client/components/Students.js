@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteStudent } from '../store';
+import { deleteStudent, fetchStudents } from '../store';
 
 const mapStateToProps = ({ students, schools }) => {
     return { students, schools }
@@ -10,33 +10,38 @@ const mapStateToProps = ({ students, schools }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        delete: (id) => dispatch(deleteStudent(id))
+        delete: (id) => dispatch(deleteStudent(id)),
+        fetch: () => dispatch(fetchStudents())
     }
 }
 
 class Students extends React.Component {
 
     componentDidUpdate(prevProps) {
-        console.log(prevProps.students);
-        console.log(this.props.match.params);
+        if (prevProps.students.length !== this.props.students.length) {
+            this.props.fetch();
+        }
     }
 
     render() {
         return (
             <div>
                 <table className="student-list">
-                    <tr>
-                        <th />
-                        <th>Student</th>
-                        <th>School</th>
-                        <th />
-                    </tr>
                     <tbody>
+                        <tr className="student-row">
+                            <th />
+                            <th>Student</th>
+                            <th>School</th>
+                            <th />
+                        </tr>
                         {this.props.students.map(student => {
                             return (
-                                <tr key={student.id}>
+                                <tr className="student-row" key={student.id}>
                                     <td className="img-td"><img className="img-td" src={student.imageUrl} /></td>
-                                    <td className="student-td"><Link to={`/students/${student.id}`}><p>{student.firstName} {student.lastName}</p></Link></td>
+                                    <td className="student-td">
+                                        <Link to={`/students/${student.id}`}><p>{student.firstName} {student.lastName}</p></Link>
+                                        <Link to={`/students/edit/${student.id}`}><button className="btn btn-danger" type="submit">Edit</button></Link>
+                                    </td>
                                     {student.schoolId ?
                                         <td className="student-td">
                                             <Link to={`/schools/${student.schoolId}`}>
@@ -46,7 +51,9 @@ class Students extends React.Component {
                                             </Link>
                                         </td> :
                                         <td className="student-td"><i>Not enrolled </i></td>}
-                                    <td className="student-td"><button className="btn btn-danger" type="submit" onClick={() => this.props.delete(student.id)}>X</button></td>
+                                    <td className="student-td">
+                                        <button className="btn btn-danger" type="submit" onClick={() => this.props.delete(student.id)}>X</button><br />
+                                    </td>
                                 </tr>
                             )
                         })}
@@ -54,6 +61,7 @@ class Students extends React.Component {
                 </table>
             </div>
         )
+
     }
 }
 

@@ -11,18 +11,10 @@ const initialState = {
 // action types
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_SCHOOLS = 'GET_SCHOOLS';
-const NEW_SCHOOL = 'NEW_SCHOOL';
-const NEW_STUDENT = 'NEW_STUDENT';
-const REMOVE_SCHOOL = 'REMOVE_SCHOOL';
-const REMOVE_STUDENT = 'REMOVE_STUDENT';
 
 // action creators
-const getStudents = (students) => ({ type: GET_STUDENTS, students })
-const getSchools = (schools) => ({ type: GET_SCHOOLS, schools })
-const newSchool = (school) => ({ type: NEW_SCHOOL, school })
-const newStudent = (student) => ({ type: NEW_STUDENT, student })
-const removeSchool = (id) => ({ type: REMOVE_SCHOOL, id })
-const removeStudent = (student) => ({ type: REMOVE_STUDENT, student })
+const getStudents = (students) => ({ type: GET_STUDENTS, students });
+const getSchools = (schools) => ({ type: GET_SCHOOLS, schools });
 
 // reducer (TODO: come back and split into 2 reducers... is this necessary?)
 const reducer = (state = initialState, action) => {
@@ -31,20 +23,10 @@ const reducer = (state = initialState, action) => {
             return { ...state, schools: action.schools }
         case GET_STUDENTS:
             return { ...state, students: action.students }
-        case NEW_SCHOOL:
-            return { ...state, schools: [...state.schools, action.school] }
-        case NEW_STUDENT:
-            return { ...state, students: [...state.students, action.student] }
-        case REMOVE_SCHOOL:
-            return { ...state, schools: [...state.schools].filter(s => s.id !== action.id) }
-        case REMOVE_STUDENT:
-            return { ...state, students: [...state.students].filter(st => st.id !== action.student.id) }
         default:
             return state;
     }
 }
-
-// thunking...
 
 // fetch all schools
 const fetchSchools = () => {
@@ -70,9 +52,7 @@ const fetchStudents = () => {
 const addSchool = (schoolToAdd) => {
     return (dispatch) => {
         axios.post('/schools', schoolToAdd)
-            .then(res => res.data)
-            .then(school => dispatch(newSchool(school)))
-            .catch(err => console.log(err));
+        dispatch(fetchSchools());
     }
 }
 
@@ -80,9 +60,7 @@ const addSchool = (schoolToAdd) => {
 const addStudent = (studentToAdd) => {
     return (dispatch) => {
         axios.post('/students', studentToAdd)
-            .then(res => res.data)
-            .then(student => dispatch(newStudent(student)))
-            .catch(err => console.log(err));
+        dispatch(fetchStudents());
     }
 }
 
@@ -90,9 +68,7 @@ const addStudent = (studentToAdd) => {
 const deleteSchool = (id) => {
     return (dispatch) => {
         axios.delete(`/schools/${id}`);
-        axios.get('/schools')
-            .then(res => res.data)
-            .then(schools => dispatch(getSchools(schools)));
+        dispatch(fetchSchools());
     }
 }
 
@@ -100,15 +76,28 @@ const deleteSchool = (id) => {
 const deleteStudent = (id) => {
     return (dispatch) => {
         axios.delete(`/students/${id}`)
-            .then(() => dispatch(removeStudent(id)))
-            .catch(err => console.log(err));
-        // axios.get('/students')
-        //     .then(res => res.data)
-        //     .then(students => dispatch(getStudents(students)));
+        dispatch(fetchStudents());
+    }
+}
+
+// update a student
+const updateStudent = (student, id) => {
+    console.log(id);
+    return (dispatch) => {
+        axios.put(`/students/edit/${id}`, student);
+        dispatch(fetchStudents());
+    }
+}
+
+// update a school
+const updateSchool = (school, id) => {
+    return (dispatch) => {
+        axios.put(`/schools/edit/${id}`, school);
+        dispatch(fetchSchools());
     }
 }
 
 const store = createStore(reducer, applyMiddleware(thunk));
 export default store;
-export { fetchSchools, fetchStudents, addSchool, addStudent, deleteSchool, deleteStudent }
+export { fetchSchools, fetchStudents, addSchool, addStudent, deleteSchool, deleteStudent, updateStudent, updateSchool }
 

@@ -2,7 +2,6 @@
 
 const express = require('express');
 const path = require('path');
-const { syncAndSeed } = require('./syncAndSeed');
 const { School, Student } = require('./db/index');
 
 const app = express();
@@ -36,6 +35,7 @@ app.post('/students', (req, res, next) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
+        schoolId: req.body.schoolId,
         imageUrl: req.body.imageUrl,
         gpa: req.body.gpa
     })
@@ -62,6 +62,7 @@ app.delete('/schools/:schoolId', (req, res, next) => {
             id: req.params.schoolId
         }
     })
+        .then(() => res.send(req.params.schoolId))
         .catch(next)
 })
 
@@ -75,8 +76,25 @@ app.delete('/students/:studentId', (req, res, next) => {
         .catch(next);
 })
 
+// update a student
+app.put('/students/edit/:studentId', async (req, res, next) => {
+    try {
+        const student = await Student.findById(req.params.studentId);
+        student.update(req.body);
+        res.status(204).end();
+    } catch (err) { next(err) }
+})
+
+// update a school
+app.put('/schools/edit/:schoolId', async (req, res, next) => {
+    try {
+        const school = await School.findById(req.params.schoolId);
+        school.update(req.body);
+        res.status(204).end();
+    } catch (err) { next(err) }
+})
+
 // sync & seed the database
 const PORT = process.env.PORT || 3000;
-syncAndSeed(true);
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteSchool } from '../store';
+import { deleteSchool, fetchSchools } from '../store';
 
 const mapStateToProps = ({ schools, students }) => {
     return { students, schools }
@@ -10,27 +10,36 @@ const mapStateToProps = ({ schools, students }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        delete: (id) => dispatch(deleteSchool(id))
+        delete: (id) => dispatch(deleteSchool(id)),
+        fetch: () => dispatch(fetchSchools())
     })
 }
 
-const Schools = (props) => {
+class Schools extends React.Component {
 
-    return (
-        <div className="school-list">
-            {props.schools.map(school => {
-                return (
-                    <div key={school.id} className="school-div">
-                        <div className="btn-container">
-                            <button type="submit" className="btn remove-school" onClick={() => props.delete(school.id)}>X</button>
+    componentDidUpdate(prevProps) {
+        if (prevProps.schools.length !== this.props.schools.length) {
+            this.props.fetch();
+        }
+    }
+
+    render() {
+        return (
+            <div className="school-list">
+                {this.props.schools.map(school => {
+                    return (
+                        <div key={school.id} className="school-div">
+                            <div className="btn-container">
+                                <button className="btn remove-school" type="submit" onClick={() => this.props.delete(school.id)}>X</button>
+                            </div>
+                            <Link to={`/schools/${school.id}`}><img src={school.imageUrl} className="school-logo" /><br /></Link>
+                            <h4 className="school-name">{school.name}</h4>
                         </div>
-                        <h6>{school.name}</h6><br />
-                        <Link to={`/schools/${school.id}`}><img src={school.imageUrl} className="school-logo" /><br /></Link>
-                    </div>
-                )
-            })}
-        </div>
-    )
+                    )
+                })}
+            </div>
+        )
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Schools);
