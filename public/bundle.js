@@ -595,19 +595,30 @@ var AddSchool = function (_React$Component) {
         value: function handleSubmit(event) {
             event.preventDefault();
 
-            var newSchool = {
-                name: this.state.name,
-                address: this.state.address,
-                imageUrl: this.state.imageUrl,
-                description: this.state.description
-            };
+            if (this.state.name && this.state.address) {
 
-            if (this.props.match.params.schoolId) {
-                this.props.update(newSchool, Number(this.props.match.params.schoolId));
+                var newSchool = {
+                    name: this.state.name,
+                    address: this.state.address,
+                    imageUrl: this.state.imageUrl || 'building.png',
+                    description: this.state.description || null
+                };
+
+                if (this.props.match.params.schoolId) {
+                    this.props.update(newSchool, Number(this.props.match.params.schoolId));
+                } else {
+                    this.props.add(newSchool);
+                }
+                this.setState({ submitted: 1 });
             } else {
-                this.props.add(newSchool);
+
+                var missingFields = [];
+                if (!this.state.name) missingFields.push('school name');
+                if (!this.state.address) missingFields.push('address');
+
+                // eslint-disable-next-line no-alert
+                alert('Missing required fields: ' + missingFields.join(', '));
             }
-            this.setState({ submitted: 1 });
         }
     }, {
         key: 'render',
@@ -757,7 +768,7 @@ var Schools = function (_React$Component) {
     _createClass(Schools, [{
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps) {
-            if (prevProps.schools.length !== this.props.schools.length) {
+            if (prevProps.schools !== this.props.schools) {
                 this.props.fetch();
             }
         }
@@ -778,7 +789,7 @@ var Schools = function (_React$Component) {
                             { className: 'btn-container' },
                             _react2.default.createElement(
                                 'button',
-                                { className: 'btn remove-school', type: 'submit', onClick: function onClick() {
+                                { className: 'btn remove-btn', type: 'submit', onClick: function onClick() {
                                         return _this2.props.delete(school.id);
                                     } },
                                 'X'
@@ -866,7 +877,11 @@ var Student = function Student(_ref2) {
             _react2.default.createElement(
                 'div',
                 { className: 'profile-img-container' },
-                _react2.default.createElement('img', { src: student.imageUrl, className: 'profile-img' })
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/students' },
+                    _react2.default.createElement('img', { src: student.imageUrl, className: 'profile-img' })
+                )
             ),
             _react2.default.createElement(
                 'div',
@@ -1035,26 +1050,42 @@ var AddStudent = function (_React$Component) {
 
             this.setState(_defineProperty({}, target.name, target.value));
         }
+
+        // eslint-disable-next-line complexity
+
     }, {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
 
-            var newStudent = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                schoolId: this.state.schoolId || null,
-                imageUrl: this.state.imageUrl || 'student.jpg',
-                gpa: this.state.gpa
-            };
+            if (this.state.firstName && this.state.lastName && this.state.email) {
 
-            if (this.props.match.params.studentId) {
-                this.props.update(newStudent, Number(this.props.match.params.studentId));
+                var newStudent = {
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    email: this.state.email,
+                    schoolId: this.state.schoolId || null,
+                    imageUrl: this.state.imageUrl || 'student.jpg',
+                    gpa: this.state.gpa
+                };
+
+                if (this.props.match.params.studentId) {
+                    this.props.update(newStudent, Number(this.props.match.params.studentId));
+                } else {
+                    this.props.add(newStudent);
+                }
+                this.setState({ submitted: 1 });
             } else {
-                this.props.add(newStudent);
+
+                var missingFields = [];
+
+                if (!this.state.firstName) missingFields.push('first name');
+                if (!this.state.lastName) missingFields.push('last name');
+                if (!this.state.email) missingFields.push('email');
+
+                // eslint-disable-next-line no-alert
+                alert('Missing required fields: ' + missingFields.join(', '));
             }
-            this.setState({ submitted: 1 });
         }
     }, {
         key: 'render',
@@ -1114,7 +1145,11 @@ var AddStudent = function (_React$Component) {
                             _react2.default.createElement(
                                 'select',
                                 { className: 'input-box', name: 'schoolId', onChange: this.handleChange },
-                                _react2.default.createElement('option', null),
+                                _react2.default.createElement(
+                                    'option',
+                                    null,
+                                    '---'
+                                ),
                                 this.props.schools.map(function (s) {
                                     return _react2.default.createElement(
                                         'option',
@@ -1240,7 +1275,7 @@ var Students = function (_React$Component) {
     _createClass(Students, [{
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps) {
-            if (prevProps.students.length !== this.props.students.length) {
+            if (this.props.students !== prevProps.students) {
                 this.props.fetch();
             }
         }
@@ -1249,104 +1284,117 @@ var Students = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'table',
-                    { className: 'student-list' },
+            if (this.props.students) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
                     _react2.default.createElement(
-                        'tbody',
-                        null,
+                        'table',
+                        { className: 'student-list' },
                         _react2.default.createElement(
-                            'tr',
-                            { className: 'student-row' },
-                            _react2.default.createElement('th', null),
+                            'tbody',
+                            null,
                             _react2.default.createElement(
-                                'th',
-                                null,
-                                'Student'
-                            ),
-                            _react2.default.createElement(
-                                'th',
-                                null,
-                                'School'
-                            ),
-                            _react2.default.createElement('th', null)
-                        ),
-                        this.props.students.map(function (student) {
-                            return _react2.default.createElement(
                                 'tr',
-                                { className: 'student-row', key: student.id },
+                                { className: 'student-row' },
+                                _react2.default.createElement('th', null),
                                 _react2.default.createElement(
-                                    'td',
-                                    { className: 'img-td' },
-                                    _react2.default.createElement('img', { className: 'img-td', src: student.imageUrl })
+                                    'th',
+                                    null,
+                                    'Student'
                                 ),
+                                _react2.default.createElement('th', null),
                                 _react2.default.createElement(
-                                    'td',
-                                    { className: 'student-td' },
+                                    'th',
+                                    null,
+                                    'School'
+                                ),
+                                _react2.default.createElement('th', null)
+                            ),
+                            this.props.students.map(function (student) {
+                                return _react2.default.createElement(
+                                    'tr',
+                                    { className: 'student-row', key: student.id },
                                     _react2.default.createElement(
                                         _reactRouterDom.Link,
                                         { to: '/students/' + student.id },
                                         _react2.default.createElement(
-                                            'p',
-                                            null,
-                                            student.firstName,
-                                            ' ',
-                                            student.lastName
+                                            'td',
+                                            { className: 'img-td' },
+                                            _react2.default.createElement('img', { className: 'img-td', src: student.imageUrl })
                                         )
                                     ),
                                     _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '/students/edit/' + student.id },
+                                        'td',
+                                        { className: 'student-td' },
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/students/' + student.id, className: 'student-info' },
+                                            _react2.default.createElement(
+                                                'p',
+                                                null,
+                                                student.firstName,
+                                                ' ',
+                                                student.lastName
+                                            )
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        { className: 'student-td-btn' },
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/students/edit/' + student.id },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { className: 'btn btn-student', type: 'submit' },
+                                                'Edit'
+                                            )
+                                        )
+                                    ),
+                                    student.schoolId ? _react2.default.createElement(
+                                        'td',
+                                        { className: 'student-td' },
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/schools/' + student.schoolId, className: 'student-info' },
+                                            _react2.default.createElement(
+                                                'p',
+                                                null,
+                                                _this2.props.schools.filter(function (s) {
+                                                    return s.id === student.schoolId;
+                                                })[0].name
+                                            )
+                                        )
+                                    ) : _react2.default.createElement(
+                                        'td',
+                                        { className: 'student-td' },
+                                        _react2.default.createElement(
+                                            'i',
+                                            null,
+                                            'Not enrolled '
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        { className: 'student-td-btn' },
                                         _react2.default.createElement(
                                             'button',
-                                            { className: 'btn btn-danger', type: 'submit' },
-                                            'Edit'
-                                        )
+                                            { className: 'btn btn-student', type: 'submit', onClick: function onClick() {
+                                                    return _this2.props.delete(student.id);
+                                                } },
+                                            'X'
+                                        ),
+                                        _react2.default.createElement('br', null)
                                     )
-                                ),
-                                student.schoolId ? _react2.default.createElement(
-                                    'td',
-                                    { className: 'student-td' },
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '/schools/' + student.schoolId },
-                                        _react2.default.createElement(
-                                            'p',
-                                            null,
-                                            _this2.props.schools.filter(function (s) {
-                                                return s.id === student.schoolId;
-                                            })[0].name
-                                        )
-                                    )
-                                ) : _react2.default.createElement(
-                                    'td',
-                                    { className: 'student-td' },
-                                    _react2.default.createElement(
-                                        'i',
-                                        null,
-                                        'Not enrolled '
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'td',
-                                    { className: 'student-td' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { className: 'btn btn-danger', type: 'submit', onClick: function onClick() {
-                                                return _this2.props.delete(student.id);
-                                            } },
-                                        'X'
-                                    ),
-                                    _react2.default.createElement('br', null)
-                                )
-                            );
-                        })
+                                );
+                            })
+                        )
                     )
-                )
-            );
+                );
+            } else {
+                return null;
+            }
         }
     }]);
 
@@ -1424,6 +1472,8 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var initialState = {
     schools: [],
     students: []
@@ -1431,6 +1481,7 @@ var initialState = {
     // action types
 };var GET_STUDENTS = 'GET_STUDENTS';
 var GET_SCHOOLS = 'GET_SCHOOLS';
+var NEW_STUDENT = 'NEW_STUDENT';
 
 // action creators
 var getStudents = function getStudents(students) {
@@ -1438,6 +1489,9 @@ var getStudents = function getStudents(students) {
 };
 var getSchools = function getSchools(schools) {
     return { type: GET_SCHOOLS, schools: schools };
+};
+var newStudent = function newStudent(student) {
+    return { type: NEW_STUDENT, student: student };
 };
 
 // reducer (TODO: come back and split into 2 reducers... is this necessary?)
@@ -1450,6 +1504,8 @@ var reducer = function reducer() {
             return _extends({}, state, { schools: action.schools });
         case GET_STUDENTS:
             return _extends({}, state, { students: action.students });
+        case NEW_STUDENT:
+            return _extends({}, state, { students: [].concat(_toConsumableArray(state.students), [action.student]) });
         default:
             return state;
     }
@@ -1492,24 +1548,29 @@ var addSchool = function addSchool(schoolToAdd) {
 // add a new student to the database
 var addStudent = function addStudent(studentToAdd) {
     return function (dispatch) {
-        _axios2.default.post('/students', studentToAdd);
-        dispatch(fetchStudents());
+        return _axios2.default.post('/students', studentToAdd).then(function (res) {
+            return res.data;
+        }).then(function (s) {
+            return dispatch(newStudent(s));
+        });
     };
 };
 
 // delete a school 
 var deleteSchool = function deleteSchool(id) {
     return function (dispatch) {
-        _axios2.default.delete('/schools/' + id);
-        dispatch(fetchSchools());
+        return _axios2.default.delete('/schools/' + id).then(function () {
+            return dispatch(fetchSchools());
+        });
     };
 };
 
 // delete a student
 var deleteStudent = function deleteStudent(id) {
     return function (dispatch) {
-        _axios2.default.delete('/students/' + id);
-        dispatch(fetchStudents());
+        return _axios2.default.delete('/students/' + id).then(function () {
+            return dispatch(fetchStudents());
+        });
     };
 };
 
@@ -1517,16 +1578,18 @@ var deleteStudent = function deleteStudent(id) {
 var updateStudent = function updateStudent(student, id) {
     console.log(id);
     return function (dispatch) {
-        _axios2.default.put('/students/edit/' + id, student);
-        dispatch(fetchStudents());
+        return _axios2.default.put('/students/edit/' + id, student).then(function () {
+            return dispatch(fetchStudents());
+        });
     };
 };
 
 // update a school
 var updateSchool = function updateSchool(school, id) {
     return function (dispatch) {
-        _axios2.default.put('/schools/edit/' + id, school);
-        dispatch(fetchSchools());
+        return _axios2.default.put('/schools/edit/' + id, school).then(function () {
+            return dispatch(fetchSchools());
+        });
     };
 };
 

@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 class Schools extends React.Component {
 
     componentDidUpdate(prevProps) {
-        if (prevProps.schools.length !== this.props.schools.length) {
+        if (prevProps.schools !== this.props.schools) {
             this.props.fetch();
         }
     }
@@ -30,7 +30,7 @@ class Schools extends React.Component {
                     return (
                         <div key={school.id} className="school-div">
                             <div className="btn-container">
-                                <button className="btn remove-school" type="submit" onClick={() => this.props.delete(school.id)}>X</button>
+                                <button className="btn remove-btn" type="submit" onClick={() => this.props.delete(school.id)}>X</button>
                             </div>
                             <Link to={`/schools/${school.id}`}><img src={school.imageUrl} className="school-logo" /><br /></Link>
                             <h4 className="school-name">{school.name}</h4>

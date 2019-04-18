@@ -20,7 +20,7 @@ const Student = ({ school, student }) => {
         return (
             <div className="profile">
                 <div className="profile-img-container">
-                    <img src={student.imageUrl} className="profile-img" />
+                    <Link to="/students"><img src={student.imageUrl} className="profile-img" /></Link>
                 </div>
                 <div className="profile-details">
                     <h2>{student.firstName} {student.lastName}</h2>

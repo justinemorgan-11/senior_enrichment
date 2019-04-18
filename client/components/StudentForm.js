@@ -59,25 +59,41 @@ class AddStudent extends React.Component {
         })
     }
 
+    // eslint-disable-next-line complexity
     handleSubmit(event) {
         event.preventDefault();
 
-        const newStudent = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            schoolId: this.state.schoolId || null,
-            imageUrl: this.state.imageUrl || 'student.jpg',
-            gpa: this.state.gpa
-        }
+        if (this.state.firstName && this.state.lastName && this.state.email) {
 
-        if (this.props.match.params.studentId) {
-            this.props.update(newStudent, Number(this.props.match.params.studentId))
+            const newStudent = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                schoolId: this.state.schoolId || null,
+                imageUrl: this.state.imageUrl || 'student.jpg',
+                gpa: this.state.gpa
+            }
+
+            if (this.props.match.params.studentId) {
+                this.props.update(newStudent, Number(this.props.match.params.studentId))
+            } else {
+                this.props.add(newStudent);
+            }
+            this.setState({ submitted: 1 });
+
         } else {
-            this.props.add(newStudent);
+
+            const missingFields = [];
+
+            if (!this.state.firstName) missingFields.push('first name');
+            if (!this.state.lastName) missingFields.push('last name');
+            if (!this.state.email) missingFields.push('email');
+
+            // eslint-disable-next-line no-alert
+            alert(`Missing required fields: ${missingFields.join(', ')}`);
         }
-        this.setState({ submitted: 1 })
     }
+
     render() {
 
         if (this.state.submitted) {
@@ -103,7 +119,7 @@ class AddStudent extends React.Component {
                         <div>
                             <label className="input-label" htmlFor="school">School:</label><br />
                             <select className="input-box" name="schoolId" onChange={this.handleChange}>
-                                <option />
+                                <option>---</option>
                                 {this.props.schools.map(s => {
                                     return <option key={s.id} value={s.id}>{s.name}</option>
                                 })}

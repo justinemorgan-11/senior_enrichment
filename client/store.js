@@ -11,10 +11,12 @@ const initialState = {
 // action types
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_SCHOOLS = 'GET_SCHOOLS';
+const NEW_STUDENT = 'NEW_STUDENT';
 
 // action creators
 const getStudents = (students) => ({ type: GET_STUDENTS, students });
 const getSchools = (schools) => ({ type: GET_SCHOOLS, schools });
+const newStudent = (student) => ({ type: NEW_STUDENT, student })
 
 // reducer (TODO: come back and split into 2 reducers... is this necessary?)
 const reducer = (state = initialState, action) => {
@@ -23,6 +25,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, schools: action.schools }
         case GET_STUDENTS:
             return { ...state, students: action.students }
+        case NEW_STUDENT:
+            return { ...state, students: [...state.students, action.student] }
         default:
             return state;
     }
@@ -59,24 +63,25 @@ const addSchool = (schoolToAdd) => {
 // add a new student to the database
 const addStudent = (studentToAdd) => {
     return (dispatch) => {
-        axios.post('/students', studentToAdd)
-        dispatch(fetchStudents());
+        return axios.post('/students', studentToAdd)
+            .then(res => res.data)
+            .then(s => dispatch(newStudent(s)))
     }
 }
 
 // delete a school 
 const deleteSchool = (id) => {
     return (dispatch) => {
-        axios.delete(`/schools/${id}`);
-        dispatch(fetchSchools());
+        return axios.delete(`/schools/${id}`)
+            .then(() => dispatch(fetchSchools()));
     }
 }
 
 // delete a student
 const deleteStudent = (id) => {
     return (dispatch) => {
-        axios.delete(`/students/${id}`)
-        dispatch(fetchStudents());
+        return axios.delete(`/students/${id}`)
+            .then(() => dispatch(fetchStudents()));
     }
 }
 
@@ -84,16 +89,18 @@ const deleteStudent = (id) => {
 const updateStudent = (student, id) => {
     console.log(id);
     return (dispatch) => {
-        axios.put(`/students/edit/${id}`, student);
-        dispatch(fetchStudents());
+        return axios.put(`/students/edit/${id}`, student)
+            .then(() => dispatch(fetchStudents()));
+
     }
 }
 
 // update a school
 const updateSchool = (school, id) => {
     return (dispatch) => {
-        axios.put(`/schools/edit/${id}`, school);
-        dispatch(fetchSchools());
+        return axios.put(`/schools/edit/${id}`, school)
+            .then(() => dispatch(fetchSchools()));
+
     }
 }
 

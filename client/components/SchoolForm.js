@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { addSchool, updateSchool } from '../store';
@@ -57,19 +56,32 @@ class AddSchool extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const newSchool = {
-            name: this.state.name,
-            address: this.state.address,
-            imageUrl: this.state.imageUrl,
-            description: this.state.description
-        }
+        if (this.state.name && this.state.address) {
 
-        if (this.props.match.params.schoolId) {
-            this.props.update(newSchool, Number(this.props.match.params.schoolId));
+            const newSchool = {
+                name: this.state.name,
+                address: this.state.address,
+                imageUrl: this.state.imageUrl || 'building.png',
+                description: this.state.description || null
+            }
+
+            if (this.props.match.params.schoolId) {
+                this.props.update(newSchool, Number(this.props.match.params.schoolId));
+            } else {
+                this.props.add(newSchool);
+            }
+            this.setState({ submitted: 1 })
+
         } else {
-            this.props.add(newSchool);
+
+            const missingFields = [];
+            if (!this.state.name) missingFields.push('school name');
+            if (!this.state.address) missingFields.push('address');
+
+            // eslint-disable-next-line no-alert
+            alert(`Missing required fields: ${missingFields.join(', ')}`);
+
         }
-        this.setState({ submitted: 1 })
     }
 
     render() {
