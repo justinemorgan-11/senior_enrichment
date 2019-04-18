@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const path = require('path');
 const { School, Student } = require('./db/index');
@@ -18,15 +16,13 @@ app.get('/', (req, res, next) => {
 // get all schools
 app.get('/schools', (req, res, next) => {
     School.findAll()
-        .then(schools => res.send(schools))
-        .catch(next);
+        .then(schools => res.send(schools));
 })
 
 // get all students
 app.get('/students', (req, res, next) => {
     Student.findAll()
-        .then(students => res.send(students))
-        .catch(next);
+        .then(students => res.send(students));
 })
 
 // add a new student to the database
@@ -39,8 +35,7 @@ app.post('/students', (req, res, next) => {
         imageUrl: req.body.imageUrl,
         gpa: req.body.gpa
     })
-        .then(student => res.send(student))
-        .catch(next);
+        .then(student => res.send(student));
 })
 
 // add a new school to the database
@@ -51,8 +46,7 @@ app.post('/schools', (req, res, next) => {
         imageUrl: req.body.imageUrl,
         description: req.body.description
     })
-        .then(school => res.send(school))
-        .catch(next);
+        .then(school => res.send(school));
 })
 
 // remove a school
@@ -62,8 +56,7 @@ app.delete('/schools/:schoolId', (req, res, next) => {
             id: req.params.schoolId
         }
     })
-        .then(() => res.send(req.params.schoolId))
-        .catch(next)
+        .then(() => res.send(req.params.schoolId));
 })
 
 // remove a student
@@ -73,7 +66,7 @@ app.delete('/students/:studentId', (req, res, next) => {
             id: req.params.studentId
         }
     })
-        .catch(next);
+        .then(() => res.send(req.params.studentId));
 })
 
 // update a student
@@ -96,5 +89,5 @@ app.put('/schools/edit/:schoolId', async (req, res, next) => {
 
 // sync & seed the database
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on port: ${PORT} `));
 

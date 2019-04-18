@@ -119,7 +119,7 @@ class AddStudent extends React.Component {
                         <div>
                             <label className="input-label" htmlFor="school">School:</label><br />
                             <select className="input-box" name="schoolId" onChange={this.handleChange}>
-                                <option>---</option>
+                                <option />
                                 {this.props.schools.map(s => {
                                     return <option key={s.id} value={s.id}>{s.name}</option>
                                 })}

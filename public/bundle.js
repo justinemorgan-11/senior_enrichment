@@ -1145,11 +1145,7 @@ var AddStudent = function (_React$Component) {
                             _react2.default.createElement(
                                 'select',
                                 { className: 'input-box', name: 'schoolId', onChange: this.handleChange },
-                                _react2.default.createElement(
-                                    'option',
-                                    null,
-                                    '---'
-                                ),
+                                _react2.default.createElement('option', null),
                                 this.props.schools.map(function (s) {
                                     return _react2.default.createElement(
                                         'option',
@@ -1520,7 +1516,7 @@ var reducer = function reducer() {
 // fetch all schools
 var fetchSchools = function fetchSchools() {
     return function (dispatch) {
-        _axios2.default.get('/schools').then(function (res) {
+        return _axios2.default.get('/schools').then(function (res) {
             return res.data;
         }).then(function (schools) {
             return dispatch(getSchools(schools));
@@ -1533,7 +1529,7 @@ var fetchSchools = function fetchSchools() {
 // fetch all students
 var fetchStudents = function fetchStudents() {
     return function (dispatch) {
-        _axios2.default.get('/students').then(function (res) {
+        return _axios2.default.get('/students').then(function (res) {
             return res.data;
         }).then(function (students) {
             return dispatch(getStudents(students));
@@ -1550,6 +1546,8 @@ var addSchool = function addSchool(schoolToAdd) {
             return res.data;
         }).then(function (s) {
             return dispatch(newSchool(s));
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };
@@ -1561,6 +1559,8 @@ var addStudent = function addStudent(studentToAdd) {
             return res.data;
         }).then(function (s) {
             return dispatch(newStudent(s));
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };
@@ -1570,6 +1570,8 @@ var deleteSchool = function deleteSchool(id) {
     return function (dispatch) {
         return _axios2.default.delete('/schools/' + id).then(function () {
             return dispatch(fetchSchools());
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };
@@ -1579,6 +1581,8 @@ var deleteStudent = function deleteStudent(id) {
     return function (dispatch) {
         return _axios2.default.delete('/students/' + id).then(function () {
             return dispatch(fetchStudents());
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };
@@ -1589,6 +1593,8 @@ var updateStudent = function updateStudent(student, id) {
     return function (dispatch) {
         return _axios2.default.put('/students/edit/' + id, student).then(function () {
             return dispatch(fetchStudents());
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };
@@ -1598,6 +1604,8 @@ var updateSchool = function updateSchool(school, id) {
     return function (dispatch) {
         return _axios2.default.put('/schools/edit/' + id, school).then(function () {
             return dispatch(fetchSchools());
+        }).catch(function (err) {
+            return console.log(err);
         });
     };
 };

@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
 // fetch all schools
 const fetchSchools = () => {
     return (dispatch) => {
-        axios.get('/schools')
+        return axios.get('/schools')
             .then(res => res.data)
             .then(schools => dispatch(getSchools(schools)))
             .catch(err => console.log(err));
@@ -49,7 +49,7 @@ const fetchSchools = () => {
 // fetch all students
 const fetchStudents = () => {
     return (dispatch) => {
-        axios.get('/students')
+        return axios.get('/students')
             .then(res => res.data)
             .then(students => dispatch(getStudents(students)))
             .catch(err => console.log(err));
@@ -61,7 +61,8 @@ const addSchool = (schoolToAdd) => {
     return (dispatch) => {
         return axios.post('/schools', schoolToAdd)
             .then(res => res.data)
-            .then(s => dispatch(newSchool(s)));
+            .then(s => dispatch(newSchool(s)))
+            .catch(err => console.log(err));
     }
 }
 
@@ -71,6 +72,7 @@ const addStudent = (studentToAdd) => {
         return axios.post('/students', studentToAdd)
             .then(res => res.data)
             .then(s => dispatch(newStudent(s)))
+            .catch(err => console.log(err));
     }
 }
 
@@ -78,7 +80,8 @@ const addStudent = (studentToAdd) => {
 const deleteSchool = (id) => {
     return (dispatch) => {
         return axios.delete(`/schools/${id}`)
-            .then(() => dispatch(fetchSchools()));
+            .then(() => dispatch(fetchSchools()))
+            .catch(err => console.log(err));
     }
 }
 
@@ -86,7 +89,8 @@ const deleteSchool = (id) => {
 const deleteStudent = (id) => {
     return (dispatch) => {
         return axios.delete(`/students/${id}`)
-            .then(() => dispatch(fetchStudents()));
+            .then(() => dispatch(fetchStudents()))
+            .catch(err => console.log(err));
     }
 }
 
@@ -95,8 +99,8 @@ const updateStudent = (student, id) => {
     console.log(id);
     return (dispatch) => {
         return axios.put(`/students/edit/${id}`, student)
-            .then(() => dispatch(fetchStudents()));
-
+            .then(() => dispatch(fetchStudents()))
+            .catch(err => console.log(err));
     }
 }
 
@@ -104,8 +108,8 @@ const updateStudent = (student, id) => {
 const updateSchool = (school, id) => {
     return (dispatch) => {
         return axios.put(`/schools/edit/${id}`, school)
-            .then(() => dispatch(fetchSchools()));
-
+            .then(() => dispatch(fetchSchools()))
+            .catch(err => console.log(err));
     }
 }
 
