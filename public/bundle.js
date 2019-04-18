@@ -1064,7 +1064,7 @@ var AddStudent = function (_React$Component) {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     email: this.state.email,
-                    schoolId: this.state.schoolId || null,
+                    schoolId: this.state.schoolId,
                     imageUrl: this.state.imageUrl || 'student.jpg',
                     gpa: this.state.gpa
                 };
@@ -1145,7 +1145,6 @@ var AddStudent = function (_React$Component) {
                             _react2.default.createElement(
                                 'select',
                                 { className: 'input-box', name: 'schoolId', onChange: this.handleChange },
-                                _react2.default.createElement('option', null),
                                 this.props.schools.map(function (s) {
                                     return _react2.default.createElement(
                                         'option',

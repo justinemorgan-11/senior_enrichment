@@ -35,7 +35,8 @@ app.post('/students', (req, res, next) => {
         imageUrl: req.body.imageUrl,
         gpa: req.body.gpa
     })
-        .then(student => res.send(student));
+        .then(student => res.send(student))
+        .catch(next);
 })
 
 // add a new school to the database

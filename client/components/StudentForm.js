@@ -69,7 +69,7 @@ class AddStudent extends React.Component {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 email: this.state.email,
-                schoolId: this.state.schoolId || null,
+                schoolId: this.state.schoolId,
                 imageUrl: this.state.imageUrl || 'student.jpg',
                 gpa: this.state.gpa
             }
@@ -119,7 +119,6 @@ class AddStudent extends React.Component {
                         <div>
                             <label className="input-label" htmlFor="school">School:</label><br />
                             <select className="input-box" name="schoolId" onChange={this.handleChange}>
-                                <option />
                                 {this.props.schools.map(s => {
                                     return <option key={s.id} value={s.id}>{s.name}</option>
                                 })}
