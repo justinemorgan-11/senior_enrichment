@@ -12,11 +12,13 @@ const initialState = {
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_SCHOOLS = 'GET_SCHOOLS';
 const NEW_STUDENT = 'NEW_STUDENT';
+const NEW_SCHOOL = 'NEW_SCHOOL';
 
 // action creators
 const getStudents = (students) => ({ type: GET_STUDENTS, students });
 const getSchools = (schools) => ({ type: GET_SCHOOLS, schools });
-const newStudent = (student) => ({ type: NEW_STUDENT, student })
+const newStudent = (student) => ({ type: NEW_STUDENT, student });
+const newSchool = (school) => ({ type: NEW_SCHOOL, school });
 
 // reducer (TODO: come back and split into 2 reducers... is this necessary?)
 const reducer = (state = initialState, action) => {
@@ -27,6 +29,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, students: action.students }
         case NEW_STUDENT:
             return { ...state, students: [...state.students, action.student] }
+        case NEW_SCHOOL:
+            return { ...state, schools: [...state.schools, action.school] }
         default:
             return state;
     }
@@ -55,8 +59,9 @@ const fetchStudents = () => {
 // add a new school to the database
 const addSchool = (schoolToAdd) => {
     return (dispatch) => {
-        axios.post('/schools', schoolToAdd)
-        dispatch(fetchSchools());
+        return axios.post('/schools', schoolToAdd)
+            .then(res => res.data)
+            .then(s => dispatch(newSchool(s)));
     }
 }
 

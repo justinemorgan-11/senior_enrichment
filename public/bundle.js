@@ -1482,6 +1482,7 @@ var initialState = {
 };var GET_STUDENTS = 'GET_STUDENTS';
 var GET_SCHOOLS = 'GET_SCHOOLS';
 var NEW_STUDENT = 'NEW_STUDENT';
+var NEW_SCHOOL = 'NEW_SCHOOL';
 
 // action creators
 var getStudents = function getStudents(students) {
@@ -1492,6 +1493,9 @@ var getSchools = function getSchools(schools) {
 };
 var newStudent = function newStudent(student) {
     return { type: NEW_STUDENT, student: student };
+};
+var newSchool = function newSchool(school) {
+    return { type: NEW_SCHOOL, school: school };
 };
 
 // reducer (TODO: come back and split into 2 reducers... is this necessary?)
@@ -1506,6 +1510,8 @@ var reducer = function reducer() {
             return _extends({}, state, { students: action.students });
         case NEW_STUDENT:
             return _extends({}, state, { students: [].concat(_toConsumableArray(state.students), [action.student]) });
+        case NEW_SCHOOL:
+            return _extends({}, state, { schools: [].concat(_toConsumableArray(state.schools), [action.school]) });
         default:
             return state;
     }
@@ -1540,8 +1546,11 @@ var fetchStudents = function fetchStudents() {
 // add a new school to the database
 var addSchool = function addSchool(schoolToAdd) {
     return function (dispatch) {
-        _axios2.default.post('/schools', schoolToAdd);
-        dispatch(fetchSchools());
+        return _axios2.default.post('/schools', schoolToAdd).then(function (res) {
+            return res.data;
+        }).then(function (s) {
+            return dispatch(newSchool(s));
+        });
     };
 };
 
